@@ -1,6 +1,5 @@
 // import { useState } from 'react'
-import './App.css'
-
+import SignUp from "./components/signup"
 function App() {
 
  
@@ -9,6 +8,7 @@ function App() {
 
   return (
     <>
+      <SignUp/>
       
     </>
     
