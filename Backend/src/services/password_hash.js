@@ -10,11 +10,13 @@ const hashPass = async (user_password) => {
   
 }
 
-const compare_pass = async () => {
+const comparePass = async (user_password,hashed_password) => {
+  const status = await bcrypt.compare(user_password, hashed_password)
+  return status
   
 }
 
 
-module.exports = {hashPass,compare_pass}
+module.exports = {hashPass,comparePass}
 
 

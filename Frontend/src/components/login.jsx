@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-const PORT = import.meta.env.VITE_API_PORT || 5000;
+const PORT = import.meta.env.VITE_PORT;
 const API_URL = `http://localhost:${PORT}/api`;
 
 const Login = () => {
@@ -12,10 +12,14 @@ const Login = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
+    
 
     try {
       const response = await fetch(`${API_URL}/login`, {
@@ -31,7 +35,10 @@ const Login = () => {
         throw new Error(data.error || "Login failed");
       }
 
-      window.location.href = "/";
+      console.log("login successfully....");
+      
+
+      // window.location.href = "/";
     } catch (err) {
       setError(err.message);
     } finally {
@@ -43,7 +50,7 @@ const Login = () => {
     <div className="min-h-screen bg-[#f7faf9] flex items-center justify-center px-4 py-10">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-[475px] bg-white border border-[#dce3e0] rounded-[30px] px-6 sm:px-10 py-9 shadow-md hover:shadow-xl hover:shadow-[#00845e]/10 transition-all duration-300"
+        className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 space-y-5"
       >
         <h2 className="text-3xl sm:text-4xl font-semibold text-[#101817] mb-3">
           Welcome back
@@ -104,7 +111,7 @@ const Login = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#00845e] hover:bg-[#006e4e] text-white text-xl font-medium py-4 rounded-2xl transition duration-200 disabled:opacity-50"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-xl font-medium py-4 rounded-2xl transition duration-200 disabled:opacity-50"
           >
             {loading ? "Signing in..." : "Log in"}
           </button>

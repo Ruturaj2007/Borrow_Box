@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-const PORT = import.meta.env.PORT || 5000;
-
+const PORT = import.meta.env.VITE_PORT;
 const API_URL = `http://localhost:${PORT}/api`;
 
 const SignUp = () => {
@@ -40,11 +39,13 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
         throw new Error(data.error || "Registration failed");
       }
 
-      const data = await response.json();
+      
 
       setSuccess("Account created successfully! Redirecting to login...");
     } catch (err) {
@@ -58,7 +59,7 @@ const SignUp = () => {
     <div className="min-h-screen bg-[#f7faf9] flex items-center justify-center px-4 py-10">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-[550px] bg-white border border-[#dce3e0] rounded-[30px] px-6 sm:px-10 py-9 shadow-md hover:shadow-xl hover:shadow-[#00845e]/10 transition-all duration-300"
+        className="w-full max-w-md bg-white rounded-xl shadow-lg p-8 space-y-4"
       >
         <h2 className="text-3xl sm:text-4xl font-semibold text-[#101817] mb-3">
           Join BorrowBox 📦
@@ -173,7 +174,7 @@ const SignUp = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#00845e] hover:bg-[#006e4e] text-white text-xl font-medium py-4 rounded-2xl transition duration-200 disabled:opacity-50"
+            className="w-full bg-indigo-600  hover:bg-indigo-700 text-white text-xl font-medium py-4 rounded-2xl transition duration-200 disabled:opacity-50"
           >
             {loading ? "Creating Account..." : "Sign up"}
           </button>
