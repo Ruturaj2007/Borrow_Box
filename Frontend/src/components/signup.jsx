@@ -58,7 +58,7 @@ const SignUp = () => {
     <div className="min-h-screen bg-[#f7faf9] flex items-center justify-center px-4 py-10">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-[575px] bg-white border border-[#dce3e0] rounded-[30px] px-6 sm:px-10 py-9 shadow-md hover:shadow-xl hover:shadow-[#00845e]/10 transition-all duration-300"
+        className="w-full max-w-[550px] bg-white border border-[#dce3e0] rounded-[30px] px-6 sm:px-10 py-9 shadow-md hover:shadow-xl hover:shadow-[#00845e]/10 transition-all duration-300"
       >
         <h2 className="text-3xl sm:text-4xl font-semibold text-[#101817] mb-3">
           Join BorrowBox 📦
