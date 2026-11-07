@@ -35,7 +35,6 @@ model Product {
   description    String
   category       String
   condition      String          @default("Good")
-  pickupLocation String
   maxBorrowDays  Int             @default(3)
   isAvailable    Boolean         @default(true)
 
@@ -66,7 +65,7 @@ model BorrowingItem {
 
   borrowDate       DateTime     @default(now())
   returnDeadline   DateTime
-  ReturnDate       DateTime?
+  returnDate       DateTime?
 
   createdAt        DateTime     @default(now())
   updatedAt        DateTime     @updatedAt

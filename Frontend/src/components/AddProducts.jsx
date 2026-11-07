@@ -68,6 +68,7 @@ const AddProducts = () => {
       setPreviewUrls(newPreviews);
     };
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -328,7 +329,7 @@ const AddProducts = () => {
 
                       </label>
 
-                    {/* )}*/}
+                    )}
 
                   </div>
 

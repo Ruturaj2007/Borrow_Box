@@ -4,9 +4,11 @@ const express = require('express');
 const app = express();
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
+// const productRoutes = require('./routes/productRoutes');
 
 const signupRoutes = require('./src/routes/signUp');
 const loginRoutes = require('./src/routes/login')
+const addProductsRouters = require("./src/routes/addProducts");
 
 
 
@@ -22,7 +24,7 @@ app.use(express.json())
 
 
 
-app.use('/api', signupRoutes,loginRoutes);
+app.use('/api', signupRoutes,loginRoutes,addProductsRouters);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`)

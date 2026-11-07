@@ -2,7 +2,14 @@ const express = require('express');
 const router = express.Router();
 
 
-router.post('/products', validateUser);
+const { authMiddleware } = require('../middlewares/login_auth');
+
+const createProductController = require('../controllers/addProductsController')
 
 
-module.exports = router
+router.post('/products',authMiddleware,createProductController)
+
+
+
+
+module.exports = router;
