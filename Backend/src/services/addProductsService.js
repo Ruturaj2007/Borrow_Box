@@ -1,36 +1,47 @@
-const {prisma} = require('../configs/db');
+const prisma = require('../configs/db');
+const uploadToCloudinary = require('../configs/cloudinary');
 
-const createProducts = async (productsDetails,owner_id)=>{
+const createProducts = async (productsDetails, owner_id, files = []) => {
   try {
     const {
       title,
       description,
       category,
       condition,
-      maxBorrowDays
+      maxBorrowDays,
     } = productsDetails;
-    
+
     const product = await prisma.product.create({
       data: {
         title,
         description,
         category,
-        condition: condition,
+        condition,
         maxBorrowDays: parseInt(maxBorrowDays),
-        ownerId: owner_id
-      }
+        ownerId: owner_id,
+      },
     });
 
-    return product
-    
-    
+    for (let i = 0; i < files.length; i++) {
+      const localFilePath = files[i].path; 
+
+      const imageUrl = await uploadToCloudinary(localFilePath); 
+
+      await prisma.productImage.create({
+        data: {
+          url: imageUrl,
+          thumbNail: i === 0,
+          productId: product.id,
+        },
+      });
+    }
+
+    return product;
+
   } catch (err) {
-    console.error(`error while creating products: ${err.message}`)
+    console.error(`Error while creating product: ${err.message}`);
     throw err;
   }
-  
-
-  
-}
+};
 
 module.exports = { createProducts };
