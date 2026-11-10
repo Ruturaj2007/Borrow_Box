@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Upload } from "lucide-react";
+import Product3DPreviewer from "../3DPreview.jsx";
+
+
 
 const PORT = import.meta.env.VITE_PORT;
 const API_URL = `http://localhost:${PORT}/api`;
@@ -101,7 +104,6 @@ const AddProducts = () => {
       setMaxBorrowDays(3);
       setImageFiles([null, null, null, null]);
       setPreviewUrls([null, null, null, null]);
-
     } catch (err) {
       setError(err.message);
     } finally {
@@ -112,7 +114,6 @@ const AddProducts = () => {
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-4">
       <div className="max-w-5xl mx-auto">
-
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900">List an Item</h1>
           <p className="mt-2 text-gray-500">
@@ -134,7 +135,6 @@ const AddProducts = () => {
 
         <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
           <form onSubmit={handleSubmit}>
-
             <div className="mb-6">
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Item Title *
@@ -173,7 +173,9 @@ const AddProducts = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
               >
                 {CATEGORIES.map((cat) => (
-                  <option key={cat} value={cat}>{cat}</option>
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
                 ))}
               </select>
             </div>
@@ -188,7 +190,9 @@ const AddProducts = () => {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
               >
                 {CONDITIONS.map((con) => (
-                  <option key={con} value={con}>{con}</option>
+                  <option key={con} value={con}>
+                    {con}
+                  </option>
                 ))}
               </select>
             </div>
@@ -240,13 +244,19 @@ const AddProducts = () => {
                         <div className="mb-2">
                           <Upload className="w-6 h-6 text-gray-400" />
                         </div>
-                        <span className="text-xs font-medium text-gray-600">{label}</span>
-                        <span className="text-[10px] text-gray-400 mt-1">Click to upload</span>
+                        <span className="text-xs font-medium text-gray-600">
+                          {label}
+                        </span>
+                        <span className="text-[10px] text-gray-400 mt-1">
+                          Click to upload
+                        </span>
                         <input
                           type="file"
                           accept="image/*"
                           className="hidden"
-                          onChange={(e) => handleImageChange(index, e.target.files[0])}
+                          onChange={(e) =>
+                            handleImageChange(index, e.target.files[0])
+                          }
                         />
                       </label>
                     )}
@@ -262,8 +272,19 @@ const AddProducts = () => {
             >
               {loading ? "Listing Item..." : "List Item for Borrowing"}
             </button>
-
           </form>
+
+          <div className="space-y-4">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+              <h2 className="text-sm font-semibold uppercase tracking-wider text-gray-400 mb-4">
+                Live Listing Preview
+              </h2>
+
+              <div className="mb-4">
+                <Product3DPreviewer images={previewUrls} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
