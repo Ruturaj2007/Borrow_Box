@@ -1,11 +1,12 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 
 const PORT = import.meta.env.VITE_PORT;
 const API_URL = `http://localhost:${PORT}/api`;
 
-const Login = () => {
+const Login = ({ onLogin }) => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,11 +40,12 @@ const Login = () => {
 
       setSuccess("logged in successfully....");
 
+      if (onLogin && data.user) {
+        onLogin(data.user);
+      }
 
-      // console.log("logged in successfully...");
-      
+      navigate('/');
 
-      // window.location.href = "/";
     } catch (err) {
       setError(err.message);
     } finally {

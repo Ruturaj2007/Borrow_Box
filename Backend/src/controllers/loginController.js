@@ -45,5 +45,8 @@ const validateUser = async (req, res) => {
     });
   }
 };
-
-module.exports = validateUser;
+const logout = (req,res) => {
+  res.clearCookie("userId", { httpOnly: true, sameSite: "lax"});
+  res.json({ message: "Logged out successfully." });
+}
+module.exports = {validateUser,logout};

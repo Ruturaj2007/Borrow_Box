@@ -83,7 +83,7 @@ const AddProducts = () => {
         formData.append("images", file);
       });
 
-      const response = await fetch(`${API_URL}/products`, {
+      const response = await fetch(`${API_URL}/addproducts`, {
         method: "POST",
         credentials: "include",
         body: formData,

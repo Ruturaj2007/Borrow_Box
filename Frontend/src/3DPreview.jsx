@@ -13,7 +13,7 @@ const Preview = ({ images = [] }) => {
     const height = container.clientHeight || 380;
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color("#f1f5f9");
+    scene.background = new THREE.Color("#000000");
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
     camera.position.set(0, 0, 6);
