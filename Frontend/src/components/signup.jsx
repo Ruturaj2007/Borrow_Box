@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-const PORT = import.meta.env.VITE_PORT;
-const API_URL = `http://localhost:${PORT}/api`;
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { registerRequest } from "../api/auth";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -33,17 +33,7 @@ const SignUp = () => {
     setSuccess("");
 
     try {
-      const response = await fetch(`${API_URL}/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Registration failed");
-      }
+      await registerRequest(formData);
 
       
 
@@ -54,6 +44,16 @@ const SignUp = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!success) {
+      return;
+    }
+
+    const timer = setTimeout(() => navigate("/login"), 1500);
+
+    return () => clearTimeout(timer);
+  }, [success, navigate]);
 
   return (
     <div className="min-h-screen bg-[#f7faf9] flex items-center justify-center px-4 py-10">

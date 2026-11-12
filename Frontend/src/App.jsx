@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 
-const PORT = import.meta.env.VITE_PORT;
-const API_URL = `http://localhost:${PORT}/api`;
+import { logoutRequest } from "./api/auth";
 
 import Navbar from "./components/navbar";
 import SignUp from "./components/signup";
@@ -40,10 +39,7 @@ function App() {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${API_URL}/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      await logoutRequest();
     } catch (err) {
       console.error("Logout error:", err);
     }

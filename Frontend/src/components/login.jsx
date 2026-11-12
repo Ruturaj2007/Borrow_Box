@@ -1,9 +1,7 @@
 
 import { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
-
-const PORT = import.meta.env.VITE_PORT;
-const API_URL = `http://localhost:${PORT}/api`;
+import { Link, useNavigate } from "react-router-dom";
+import { loginRequest } from "../api/auth";
 
 const Login = ({ onLogin }) => {
   const navigate = useNavigate();
@@ -25,18 +23,7 @@ const Login = ({ onLogin }) => {
     
 
     try {
-      const response = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Login failed");
-      }
+      const data = await loginRequest(email, password);
 
       setSuccess("logged in successfully....");
 
