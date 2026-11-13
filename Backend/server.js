@@ -10,6 +10,7 @@ const loginRoutes = require('./src/routes/login')
 const addProductsRouters = require("./src/routes/addProducts");
 const dashboardRoutes = require("./src/routes/dashboard");
 const productRoutes = require("./src/routes/products");
+const borrowRoutes = require("./src/routes/borrows");
 
 
 
@@ -31,7 +32,7 @@ app.use("/uploads", express.static(require("path").join(__dirname, "public/uploa
 
 
 
-app.use('/api', signupRoutes,loginRoutes,addProductsRouters,dashboardRoutes,productRoutes);
+app.use('/api', signupRoutes,loginRoutes,addProductsRouters,dashboardRoutes,productRoutes,borrowRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`)
