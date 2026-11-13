@@ -11,6 +11,7 @@ import AddProducts from "./components/AddProducts";
 import Browser from "./components/browser";
 import Dashboard from "./components/dashboard";
 import GuestRoute from "./components/GuestRoute";
+import ProductDetail from "./components/productDetail";
 
 function AuthRoute({ user, children }) {
   if (!user) {
@@ -56,6 +57,7 @@ function App() {
 
       <Routes className="flex-1">
         <Route path="/" element={<Browser user={user} />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route
           path="/login"
           element={
