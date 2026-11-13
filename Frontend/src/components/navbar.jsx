@@ -20,7 +20,7 @@ const Navbar = ({user, onLogout }) => {
                   Browse
                 </Link>
                 <Link
-                  to="/add-product"
+                  to="/addproduct"
                   className="flex items-center gap-1 text-gray-600 hover:text-indigo-600 text-sm font-medium"
                 >
                   <Plus className="w-4 h-4" />
@@ -54,13 +54,17 @@ const Navbar = ({user, onLogout }) => {
                   className="text-gray-600 hover:text-indigo-600 text-sm font-medium"
                 >
                   Login
-                </Link>
+                  </Link>
+                  
                 <Link
-                  to="/signup"
+                  to="/register"
                   className="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo-700 transition"
                 >
                   Register
-                </Link>
+                  </Link>
+
+                
+                  
               </>
             )}
           </div>

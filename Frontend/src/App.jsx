@@ -74,14 +74,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/add-product"
-          element={
-            <AuthRoute user={user}>
-              <AddProducts />
-            </AuthRoute>
-          }
-        />
+        
         <Route
           path="/addproduct"
           element={

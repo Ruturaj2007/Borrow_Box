@@ -25,21 +25,31 @@ const Browser = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+        fetchProducts();
+      }, [category]);
+  
+  
     const fetchProducts = async () => {
-      try {
-        const response = await fetch(`${API_URL}/products`);
-        if (response.ok) {
+        setLoading(true);
+        try {
+          const url = category === "All"
+            ? `${API_URL}/products`
+            : `${API_URL}/products?category=${category}`;
+    
+          const response = await fetch(url);
+          if (!response.ok) {
+            throw new Error("Failed to fetch products");
+          }
           const data = await response.json();
-          setProducts(data.products || data || []);
+          setProducts(data);
+        } catch (err) {
+          console.error("Failed to fetch products:", err);
+          setProducts([]);
+        } finally {
+          setLoading(false);
         }
-      } catch (err) {
-        console.log("Products fetch error:", err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProducts();
-  }, []);
+      };
+
 
   
 
@@ -94,7 +104,7 @@ const Browser = () => {
                 <div className="aspect-[4/3] bg-gray-100 overflow-hidden">
                   {product.images && product.images.length > 0 ? (
                     <img
-                      src={product.images[0]}
+                      src={product.images[0].url}
                       alt={product.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition"
                     />
