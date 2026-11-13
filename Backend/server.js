@@ -9,6 +9,7 @@ const signupRoutes = require('./src/routes/signUp');
 const loginRoutes = require('./src/routes/login')
 const addProductsRouters = require("./src/routes/addProducts");
 const dashboardRoutes = require("./src/routes/dashboard");
+const productRoutes = require("./src/routes/products");
 
 
 
@@ -26,9 +27,11 @@ app.use(cookieParser());
 
 app.use(express.json())
 
+app.use("/uploads", express.static(require("path").join(__dirname, "public/uploads")));
 
 
-app.use('/api', signupRoutes,loginRoutes,addProductsRouters,dashboardRoutes);
+
+app.use('/api', signupRoutes,loginRoutes,addProductsRouters,dashboardRoutes,productRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`)
