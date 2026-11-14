@@ -5,12 +5,16 @@ import { ArrowLeft, Box, Calendar, User } from "lucide-react";
 const PORT = import.meta.env.VITE_PORT;
 const API_URL = `http://localhost:${PORT}/api`;
 
-const ProductDetail = () => {
+const ProductDetail = ({ user }) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [active, setActive] = useState(0);
+
+  const [requesting, setRequesting] = useState(false);
+  const [requestMessage, setRequestMessage] = useState("");
+  const [requestError, setRequestError] = useState("");
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -32,6 +36,33 @@ const ProductDetail = () => {
 
     fetchProduct();
   }, [id]);
+
+  const requestBorrow = async () => {
+    setRequesting(true);
+    setRequestError("");
+    setRequestMessage("");
+
+    try {
+      const response = await fetch(`${API_URL}/borrows`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ productId: product.id }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Could not send the request.");
+      }
+
+      setRequestMessage("Request sent. The owner will accept or decline it.");
+    } catch (err) {
+      setRequestError(err.message);
+    } finally {
+      setRequesting(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -57,6 +88,7 @@ const ProductDetail = () => {
   }
 
   const images = product.images || [];
+  const isOwner = Boolean(user) && user.id === product.owner?.id;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -142,6 +174,47 @@ const ProductDetail = () => {
               <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-gray-100 text-gray-600">
                 Currently borrowed
               </span>
+            )}
+
+            {isOwner ? (
+              <p className="mt-4 text-sm text-gray-500">
+                This is your item, so there is nothing to request.
+              </p>
+            ) : !user ? (
+              <p className="mt-4 text-sm text-gray-500">
+                <Link to="/login" className="text-indigo-600 font-medium">
+                  Log in
+                </Link>{" "}
+                to ask for this item.
+              </p>
+            ) : product.isAvailable ? (
+              <button
+                onClick={requestBorrow}
+                disabled={requesting || Boolean(requestMessage)}
+                className="mt-4 w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-medium px-4 py-2.5 rounded-xl transition"
+              >
+                {requesting
+                  ? "Sending..."
+                  : requestMessage
+                    ? "Request sent"
+                    : `Request to borrow for ${product.maxBorrowDays} days`}
+              </button>
+            ) : (
+              <p className="mt-4 text-sm text-gray-500">
+                Someone already has this. Check back once it is returned.
+              </p>
+            )}
+
+            {requestMessage && (
+              <p className="mt-3 text-sm text-green-700 bg-green-50 rounded-xl px-4 py-3">
+                {requestMessage}
+              </p>
+            )}
+
+            {requestError && (
+              <p className="mt-3 text-sm text-red-700 bg-red-50 rounded-xl px-4 py-3">
+                {requestError}
+              </p>
             )}
           </div>
         </div>

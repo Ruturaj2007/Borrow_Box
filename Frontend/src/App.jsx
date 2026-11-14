@@ -57,7 +57,7 @@ function App() {
 
       <Routes className="flex-1">
         <Route path="/" element={<Browser user={user} />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/product/:id" element={<ProductDetail user={user} />} />
         <Route
           path="/login"
           element={
